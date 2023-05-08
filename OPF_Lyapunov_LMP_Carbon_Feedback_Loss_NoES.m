@@ -10,7 +10,7 @@ load('CCarbon.mat','CCarbon');
 delta = 0.0001;
 Cgen_k1 = Cgen_k+delta*CCarbon;
 kappa_carbon = 0.05;
-
+% Cgen_k1 = Cgen_k1-kappa_carbon*CCarbon;
 
 pgSet = zeros(Ngen,Num_T);
 prSet = zeros(NR,Num_T);
@@ -36,7 +36,7 @@ for t = 1:Num_T
     pgSet(:,t) = value(pg);
     prSet(:,t) = value(pr);
 
-    CPriceSet(:,t) = calCPrice_PTDF(PD0(:,t),PR(:,t));
+    CPriceSet(:,t) = calCPrice_PTDF_num(PD0(:,t),PR(:,t));
 end
 
 figure;
@@ -58,4 +58,5 @@ xlabel('Time (h)');
 ylabel('Cumulative system emission (10^5 kgCO_2');
 set(gca,'FontName','Times New Roman','FontSize',14);
 
-save('Result_Lyapunov_ES_Feedback_Loss_NoES.mat','PD0','pgSet','lambdaSet','PR','Num_T','Delta_t','CPriceSet','CCostAccumSys');
+save('Result_Lyapunov_ES_Feedback_Loss_NoES.mat','PD0','pgSet','prSet','lambdaSet','PR','Num_T','Delta_t','CPriceSet','CCostAccumSys');
+% save('Result_Lyapunov_ES_Feedback_Loss_NoES_k0.mat','PD0','pgSet','prSet','lambdaSet','PR','Num_T','Delta_t','CPriceSet','CCostAccumSys');

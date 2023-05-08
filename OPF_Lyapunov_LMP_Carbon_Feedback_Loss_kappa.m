@@ -7,6 +7,7 @@ load('CCarbon.mat','CCarbon');
 delta = 0.0001;
 Cgen_k1 = Cgen_k+delta*CCarbon;
 kappa_carbon = 0.10;
+Cgen_k1 = Cgen_k1+(kappa_carbon-0.05)*CCarbon;
 carbon_l = [0.00;0.00];
 carbon_u = [0.31;1.45];
 lambda_u = [0.55;1.78]+carbon_u*kappa_carbon;
@@ -68,7 +69,7 @@ for t = 1:Num_T
     qs = qs-eta_c*min(psSet(:,t),0)*Delta_t-max(psSet(:,t),0)*Delta_t/eta_d;
     qsSet(:,t) = qs;
 
-    CPriceSet(:,t) = calCPrice_PTDF(PD0(:,t)-Ies*psSet(:,t),PR(:,t));
+    CPriceSet(:,t) = calCPrice_PTDF_num(PD0(:,t)-Ies*psSet(:,t),PR(:,t));
     carbonES = CPriceSet(Ines,t);
 end
 
@@ -164,4 +165,4 @@ set(gca,'FontName','Times New Roman','FontSize',14);
 
 ab1 = polyfit((1:Num_T+1)',CCostAccumSys,1);
 
-save('Result_Lyapunov_ES_Feedback_Loss.mat','PD0','psSet','pgSet','lambdaSet','PR','Num_T','Delta_t','kappa_carbon','CPriceSet','income','CCostAccum','CCostAccumSys');
+save('Result_Lyapunov_ES_Feedback_Loss.mat','PD0','psSet','pgSet','prSet','lambdaSet','PR','Num_T','Delta_t','kappa_carbon','CPriceSet','income','CCostAccum','CCostAccumSys');
